@@ -1,3 +1,4 @@
+<?php session_start();?>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -18,6 +19,7 @@ function check_input($data){
 }
 
 $user_email=check_input($_POST['user_email']);
+$_SESSION['user_email']=$user_email;
 $auth_code=check_input($_POST['auth_code']);
 
 if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/",$user_email)) {
@@ -32,12 +34,13 @@ if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/",$user_email)) {
 	$result = mysql_query($sql);
 	$row = mysql_fetch_array($result);
 	if($row['email'] == $user_email && $row['code'] == $auth_code){
-		echo "<h2>修改密码</h2>";
+		/*echo "<h2>修改密码</h2>";
 		echo "<form action='changepassword.php' method='post'>";
 		echo "<p>填写新密码：<input type='password' name='user_password'><br>";
 		echo "<p>确认新密码：<input type='password' name='check_password'><br>";
 		echo "<input type='hidden' name='user_email' value='$user_email' />";
-		echo "<input class='submit' type='submit'></form>";
+		echo "<input class='submit' type='submit'></form>";*/
+		echo "<script>window.location.href='getchangepassword.html';</script>";
 	}else{
 		echo "<script>alert('邮箱或验证码错误'); history.go(-1);</script>";
 		//die("邮箱或验证码错误");
